@@ -58,7 +58,7 @@ const LoadingInfo = () =>{
                         <Label for="driverId">Driver Id</Label>
                         <Input type="text" name="driverId" 
                          onChange={(event)=>onLoadInfoChange(event,'driverId')}
-                         value={loadInfoData.driverId}/><br/>
+                         value={loadInfoData.driverId}/>
 
                          <div>
       <label htmlFor="select-dropdown">Customer ID:</label>
@@ -68,7 +68,7 @@ const LoadingInfo = () =>{
         //onChange={handleChange}
         onChange={(event)=>onLoadInfoChange(event,'customerId')}
                          value={loadInfoData.customerId}
-        style={{ marginLeft: '10px', padding: '5px' }}
+        style={{  padding: '5px',width:'100%' }}
       >
         <option value="" disabled>
           -- Select an option --

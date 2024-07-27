@@ -1,34 +1,38 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { NavLink,Button, Card, CardBody, Col, Container, Input, Label, Row, Form, Nav, NavItem, TabContent, TabPane, CardTitle, CardText } from "reactstrap";
+import { NavLink,Button, Card, CardBody, Col, Container, Input, Label, Row, Form, Nav, NavItem, TabContent, TabPane, CardTitle, CardText,FormGroup,FormText } from "reactstrap";
 import QuantitySelector from "./QuantitySelector";
 
 
 const IndentDetails=()=>{
-    const indentList = [
-        { indentId: '1', customerId: 'customer1',quantity:'0',recipeId:'R1' },
-        { indentId: '2', customerId: 'customer1',quantity:'0',recipeId:'R2' },
-        { indentId: '3', customerId: 'customer1',quantity:'0',recipeId:'R3' },
-        { indentId: '4', customerId: 'customer1',quantity:'0',recipeId:'R4' },
+
+
+      const CustomerOptions = [
+        { label: 'Customer-1', value: 'customer1' },
+        { label: 'Customer-2', value: 'customer2' },
+        { label: 'Customer-3', value: 'customer3' },
+      ];
+
+      const RecipeOptions = [
+        { label: 'Recipe-1', value: 'Recipe1' },
+        { label: 'Recipe-2', value: 'Recipe2' },
+        { label: 'Recipe-3', value: 'Recipe3' },
       ];
 
     const [indentFormData,setIndentFormData]=useState({
-        indentId:'Indent-1',
-        customerId:'Customer-1',
+        indentId:'',
+        customerId:'',
         quantity:'',
-        recipeId:'Recipe-1'
+        recipeId:''
     })
 
-    const setIndentForm=(event,fieldName)=>
-        {
-            setIndentFormData({...indentFormData,[fieldName]:event.target.value})
-        }
         const saveIndentData=(event)=>{
             event.preventDefault();
             indentFormData.quantity=quantity;
             toast.info("Indent Form: "+JSON.stringify(indentFormData));
             
             }
+
     const [quantity, setQuantity] = useState(1);
     
 
@@ -37,100 +41,101 @@ const IndentDetails=()=>{
     setQuantity(newQuantity);
   };
 
-  const onClickHandler=(id)=>{
-    toast.info("indent id-"+id.indentId);
-  }
+
+  const onIndentChange=(event,fieldName)=>
+    {
+        setIndentFormData({...indentFormData,[fieldName]:event.target.value})
+    }
+
 
     return(
        <>
         <Container>
             <Row className="mt-2">
-            <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid black' }}>
-        <thead>
-          <tr style={{ border: '1px solid black' }}>
-            <th>Indent Id</th>
-            <th>Customer Id</th>
-            <th>recipe Id</th>
-            <th>quantity</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-        {indentList.length > 0 ? (
-            indentList.map((i) => (
-            <tr>
-                <td>{i.indentId}</td>
-                <td>{i.customerId}</td>
-                <td>{i.recipeId}</td>
-                <td>
-                <div className="App">
-      <QuantitySelector 
-        initialQuantity={quantity}
-        minQuantity={1}
-        maxQuantity={100}
-        onQuantityChange={handleQuantityChange}
-      />
-    </div>
-                </td>
-                <td>
-                <Button type="button" onClick={() => onClickHandler({indentId: i.indentId})}   block color="primary" className="mt-2">Proceed</Button>
-                </td>
-            </tr>
-            ))
-        ) : (
-          
-            <p>No results found</p>
-          
-        )}
-            </tbody>
-            </table>
-          {/*  {indentList.length > 0 ? (
-            indentList.map((i) => (
-            <Col md="4" key={i.indentId} className="mb-3">
+    
+           <Col className="col-md-3"></Col>
+            <Col className="col-md-6">
             <Card className="shadow-lg">
+              
                         <CardBody>
-                           
-                            <Form onSubmit={saveIndentData}>
-                            <h5>Indent Details !!</h5>
-                            <Label for="indentId">Indent Id</Label>
-                            <Input readOnly type="text" name="indentId" 
-                            value={i.indentId}/>
-
-                            <Label for="customerId">Customer Id</Label>
-                            <Input readOnly type="text" name="customerId" 
-                            value={i.customerId}
-                            />
-                            <Label for="quantity">quantity</Label>
-                            <Input readOnly type="text" name="quantity" 
-                            value={quantity}
-                            />
-                             <div className="App">
-      <QuantitySelector 
-        initialQuantity={quantity}
-        minQuantity={1}
-        maxQuantity={100}
-        onQuantityChange={handleQuantityChange}
-      />
+                        <h3>Indent Details !!</h3>
+                        <Form onSubmit={saveIndentData}>
+  <FormGroup>
+    <Label for="Customer ID">
+    Customer ID
+    </Label>
+    <div >
+      <select 
+        id="select-dropdown"
+        //value={selectedValue}
+        //onChange={handleChange}
+        onChange={(event)=>onIndentChange(event,'customerId')}
+                         value={indentFormData.customerId}
+        style={{ marginLeft: '10px', padding: '5px', width:'100%' }}
+      >
+        <option value="" disabled>
+          -- Select an option --
+        </option>
+        {CustomerOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
     </div>
-   
-                             <Label for="recipeId">recipe Id</Label>
-                            <Input type="text" name="recipeId" 
-                            value={i.recipeId}
-                            />
-                           
+  </FormGroup>
+  <FormGroup>
+    <Label for="examplePassword">
+    Recipe Id:
+    </Label>
+    <div>
+      <select
+        id="select-dropdown"
+        //value={selectedValue}
+        //onChange={handleChange}
+        onChange={(event)=>onIndentChange(event,'recipeId')}
+                         value={indentFormData.recipeId}
+        style={{ marginLeft: '10px', padding: '5px' , width:'100%' }}
+      >
+        <option value="" disabled>
+          -- Select an option --
+        </option>
+        {RecipeOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  </FormGroup>
+  <FormGroup>
+  <label htmlFor="select-dropdown">Quantity(ltr):  </label>
 
-                            <Button type="submit"   block color="primary" className="mt-2">Proceed</Button>
-                            </Form>
+<div className="App">
+<QuantitySelector 
+initialQuantity={quantity}
+minQuantity={1}
+maxQuantity={100}
+onQuantityChange={handleQuantityChange}
+/>
+</div>
+  </FormGroup><br/>
+  <Button type="submit" color="warning" className="btn btn-lg">Save</Button>
+</Form>
+                           
+                          
+                            
+                          
+
+  
+   
+     
+
+
                         </CardBody>
                     </Card>
             </Col>
-              ))
-            ) : (
-              <Col>
-                <p>No results found</p>
-              </Col>
-            )}*/}
-
+            <Col className="col-md-3"></Col>
             </Row>
         </Container>
         </>

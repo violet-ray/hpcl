@@ -27,8 +27,7 @@ const QuantitySelector = ({ initialQuantity = 1, minQuantity = 1, maxQuantity = 
       <input 
         type="number" 
         value={quantity} 
-        readOnly 
-        style={{ width: '50px', textAlign: 'center' }}
+        style={{ width: '200px', textAlign: 'center' }}
       />
       <button type="button" onClick={handleIncrease} disabled={quantity === maxQuantity} style={{ marginLeft: '10px' }}>
         +
